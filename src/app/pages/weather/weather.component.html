@@ -1,0 +1,63 @@
+<div class="page">
+  <div class="card">
+    <div class="search">
+      <input #searchInput type="text" placeholder="Buscar municipio" [(ngModel)]="search" (input)="onSearch()"
+        (focus)="showResults = true" />
+
+      <select [(ngModel)]="unit" (change)="changeUnit(unit)">
+        <option value="G_FAH">°F</option>
+        <option value="G_CEL">°C</option>
+      </select>
+    </div>
+
+    <ng-template [ngIf]="showResults && municipalities.length">
+      <div class="results" (mousedown)="$event.preventDefault()">
+        <div class="result-item" *ngFor="let m of municipalities" (click)="selectMunicipality(m)">
+          {{ m.name }}
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="loading" *ngIf="loading">
+      Cargando predicción...
+    </div>
+
+    <div class="error" *ngIf="predictionErrorMessage">
+      {{ predictionErrorMessage }}
+    </div>
+
+    <div class="error" *ngIf="municipalityErrorMessage">
+      {{ municipalityErrorMessage }}
+    </div>
+
+    <div class="weather" *ngIf="prediction && selectedMunicipality">
+
+      <h2>{{ selectedMunicipality.name }}</h2>
+
+
+      <div class="date">
+        {{ getPredictionDate() }}
+      </div>
+
+
+      <div class="temp">
+        {{ prediction.averageTemperature }}°
+        {{ prediction.unitTemperature === 'G_FAH' ? 'F' : 'C' }}
+      </div>
+
+      <div class="icon">
+        {{ getRainIcon() }}
+      </div>
+
+
+      <div class="rain">
+        <div *ngFor="let p of prediction.precipitationProb">
+          <strong>{{ p.probability }}%</strong>
+          <span>{{ p.period }}</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
