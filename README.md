@@ -21,6 +21,24 @@ docker-compose up
 
 se descargarán automáticamente las imágenes Docker tanto del frontend como del backend complementario a este proyecto (https://github.com/dasanlo14/aemetBackendTest), y se levantarán ambos servicios de forma conjunta.
 
+**Importante**
+
+Para que el backend pueda conectarse correctamente a la API de AEMET, es necesario configurar la variable de entorno AEMET_API_KEY.
+Esta variable puede definirse de dos formas:
+
+**1. Usando un archivo .env**
+
+En el mismo directorio donde se encuentra el docker-compose.yml, crear un archivo .env con el siguiente contenido:
+
+```bash
+AEMET_API_KEY=TU_API_KEY_DE_AEMET
+```
+**2. Modificando directamente docker-compose.yml**
+   
+```bash
+environment:
+  AEMET_API_KEY: TU_API_KEY_DE_AEMET
+```
 La aplicación quedará accesible en los siguientes puertos:
 
  - Frontend: http://localhost:4200
